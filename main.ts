@@ -3,13 +3,14 @@ import Bot from "./src/app/Bot";
 process.env.TZ = "Indonesia/Jakarta";
 
 require("dotenv").config();
+
 const result = require("dotenv").config();
+
 if (result.error) {
   console.error("Error loading .env file:", result.error);
 } else {
   console.log(".env file loaded successfully");
 }
-
 
 
 type BotOptions = {
@@ -36,8 +37,6 @@ function main(): void {
 
 console.log("Bot is running now!");
 console.log("Token:", process.env.TOKEN);
-
-
 
 main();
 
