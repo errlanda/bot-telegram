@@ -1,0 +1,24 @@
+{
+  "name": "cuybot",
+  "version": "1.0.0",
+  "description": "cuybot - telegram bot using node js with typescript",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "nodemon main.ts",
+    "start": "tsc && node dist/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.3",
+    "node-telegram-bot-api": "^0.64.0",
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.64.2",
+    "typescript": "^5.3.3"
+  }
+}
