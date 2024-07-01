@@ -38,7 +38,12 @@ console.log("Bot options:", botOptions);
 const bot = new Bot(token, botOptions);
 
 bot.on("polling_error", (error) => {
-  console.error("Polling error:", error.code, error.message);
+  // Handle specific polling errors
+  if (error.message.includes("EFATAL")) {
+    console.error("Polling error:", "EFATAL error occurred");
+  } else {
+    console.error("Polling error:", error.message);
+  }
 });
 
 function main(): void {
