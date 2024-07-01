@@ -13,33 +13,33 @@ if (result.error) {
 type BotOptions = {
   polling: boolean;
   filePath?: boolean;
-  agentOptions?: {
-    socksHost?: string;
-    socksPort?: number;
-    socksUsername?: string;
-    socksPassword?: string;
-  };
 };
 
 const token: string | undefined = process.env.TOKEN;
-
-const botOptions: BotOptions = {
-  polling: true,
-  filePath: false,
-  agentOptions: {
-    socksHost: process.env.PROXY_SOCKS5_HOST,
-    socksPort: process.env.PROXY_SOCKS5_PORT ? parseInt(process.env.PROXY_SOCKS5_PORT) : undefined,
-    // If authorization is needed:
-    // socksUsername: process.env.PROXY_SOCKS5_USERNAME,
-    // socksPassword: process.env.PROXY_SOCKS5_PASSWORD
-  }
-};
 
 if (!token) {
   throw new Error("Bot token is not defined in environment variables");
 }
 
+const botOptions: BotOptions = {
+  polling: true,
+  filePath: false,
+  // agentOptions: {
+  //   socksHost: process.env.PROXY_SOCKS5_HOST,
+  //   socksPort: process.env.PROXY_SOCKS5_PORT ? parseInt(process.env.PROXY_SOCKS5_PORT) : undefined,
+  //   // If authorization is needed:
+  //   // socksUsername: process.env.PROXY_SOCKS5_USERNAME,
+  //   // socksPassword: process.env.PROXY_SOCKS5_PASSWORD
+  // }
+};
+
+console.log("Bot options:", botOptions);
+
 const bot = new Bot(token, botOptions);
+
+bot.on("polling_error", (error) => {
+  console.error("Polling error:", error.code, error.message);
+});
 
 function main(): void {
   try {
