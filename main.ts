@@ -2,8 +2,6 @@ import Bot from "./src/app/Bot";
 
 process.env.TZ = "Indonesia/Jakarta";
 
-require("dotenv").config();
-
 const result = require("dotenv").config();
 
 if (result.error) {
@@ -12,31 +10,58 @@ if (result.error) {
   console.log(".env file loaded successfully");
 }
 
-
 type BotOptions = {
   polling: boolean;
   filePath?: boolean;
+  agentOptions?: {
+    socksHost?: string;
+    socksPort?: number;
+    socksUsername?: string;
+    socksPassword?: string;
+  };
 };
 
-// ...
-
 const token: string | undefined = process.env.TOKEN;
-const botOptions: BotOptions = { polling: true, filePath: false };
+
+if (!token) {
+  throw new Error("Bot token is not defined in environment variables");
+}
+
+const botOptions: BotOptions = {
+  polling: true,
+  filePath: false,
+  agentOptions: {
+    socksHost: process.env.PROXY_SOCKS5_HOST,
+    socksPort: process.env.PROXY_SOCKS5_PORT ? parseInt(process.env.PROXY_SOCKS5_PORT) : undefined,
+    // If authorization is needed:
+    // socksUsername: process.env.PROXY_SOCKS5_USERNAME,
+    // socksPassword: process.env.PROXY_SOCKS5_PASSWORD
+  }
+};
+
+console.log("Bot options:", botOptions);
 
 const bot = new Bot(token, botOptions);
 
+bot.on("polling_error", (error) => {
+  console.error("Polling error:", error.code, error.message);
+});
+
 function main(): void {
-  bot.showHelp();
-  bot.showFollowedText();
-  bot.showAvatar();
-  bot.showEarthQuakeInfo();
-  bot.showGreeting();
-  bot.showNews();
-  bot.showQuotes();
+  try {
+    bot.showHelp();
+    bot.showFollowedText();
+    bot.showAvatar();
+    bot.showEarthQuakeInfo();
+    bot.showGreeting();
+    bot.showNews();
+    bot.showQuotes();
+  } catch (error) {
+    console.error("An error occurred while running the bot:", error);
+  }
 }
 
 console.log("Bot is running now!");
 console.log("Token:", process.env.TOKEN);
 
 main();
-
