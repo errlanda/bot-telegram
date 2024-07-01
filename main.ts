@@ -23,10 +23,6 @@ type BotOptions = {
 
 const token: string | undefined = process.env.TOKEN;
 
-if (!token) {
-  throw new Error("Bot token is not defined in environment variables");
-}
-
 const botOptions: BotOptions = {
   polling: true,
   filePath: false,
@@ -39,13 +35,11 @@ const botOptions: BotOptions = {
   }
 };
 
-console.log("Bot options:", botOptions);
+if (!token) {
+  throw new Error("Bot token is not defined in environment variables");
+}
 
 const bot = new Bot(token, botOptions);
-
-bot.on("polling_error", (error) => {
-  console.error("Polling error:", error.code, error.message);
-});
 
 function main(): void {
   try {
