@@ -18,7 +18,7 @@ type BotOptions = {
   filePath?: boolean;
 };
 
-bot.on("polling_error", (msg) => console.log(msg));
+
 
 
 // ...
