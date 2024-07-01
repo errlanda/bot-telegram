@@ -2,8 +2,6 @@ import Bot from "./src/app/Bot";
 
 process.env.TZ = "Indonesia/Jakarta";
 
-require("dotenv").config();
-
 const result = require("dotenv").config();
 
 if (result.error) {
@@ -22,8 +20,6 @@ type BotOptions = {
     socksPassword?: string;
   };
 };
-
-// ...
 
 const token: string | undefined = process.env.TOKEN;
 
@@ -59,7 +55,7 @@ function main(): void {
   }
 }
 
-console.log("Bot berjalan normal!");
+console.log("Bot is running now!");
 console.log("Token:", process.env.TOKEN);
 
 main();
